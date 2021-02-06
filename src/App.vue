@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header></Header>
+    <Header v-rainbow></Header>
 <router-view></router-view>
   </div>
 </template>

@@ -1,5 +1,6 @@
 <template>
-  <div class="add-blog">
+  <div class="add-blog" v-theme="'wide'">
+    <!-- 传字符串‘wide’,限制div宽度为800 -->
     <h2 v-if="submmited">博客发布成功！</h2>
     <div class="edit-area" v-else>
       <h3>写博客</h3>
@@ -115,7 +116,6 @@ export default {
   text-align: left;
 }
 .add-blog {
-  width: 800px;
   margin: 0 auto;
   display: flex;
 }
