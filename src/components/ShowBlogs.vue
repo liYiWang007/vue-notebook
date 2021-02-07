@@ -10,11 +10,13 @@
         v-for="(item, index) in filteredBlogs"
         :key="index"
       >
-        <h3 style="text-align-left" v-rainbow>
-          {{ item.title | toUppercase }}
-        </h3>
+        <router-link :to="'/blog/' + item.id"
+          ><h3 style="text-align-left" v-rainbow>
+            {{ item.title | toUppercase }}
+          </h3></router-link
+        >
         <!-- 只展示100个字 -->
-        <article>{{ item.body | snippet }}</article>
+        <article>{{ item.content | snippet }}</article>
       </li>
     </ul>
   </div>
@@ -33,14 +35,37 @@ export default {
     // 本地获取数据
     // vue-cli3 json文件要放在public里
     this.$http
-      .get("../../data/posts.json")
+      .get(
+        "https://my-little-project-532c2-default-rtdb.firebaseio.com/posts.json"
+      )
+      // .get("../../data/posts.json")
 
       // 从网络获取数据
       // this.$http.get("https://jsonplaceholder.typicode.com/posts")
       .then((data) => {
         // 截取前十条数据
-        this.blogItems = data.body.slice(0, 9);
-        console.log(this.blogItems);
+        console.log(data.json);
+        return data.json();
+        // this.blogItems = data.body.slice(0, 19);
+      })
+      .then((data) => {
+        const blogsArray = [];
+        for (let key in data) {
+          // 校验key
+          console.log(key);
+
+          // 赋值，id的值=key值
+          data[key].id = key;
+
+          // 校验网页是否有id这个参数
+          console.log(data[key]);
+          // 把获取的值push到新定义的数组里
+          blogsArray.push(data[key]);
+        }
+        console.log(blogsArray);
+
+        // 把获得的blogsArray值赋给blogsItem
+        this.blogItems = blogsArray;
       });
   },
   computed: {
@@ -65,20 +90,20 @@ export default {
       return value.slice(0, 100) + "...";
     },
   },
-//局部自定义指令 directives
-// directives: {
-// rainbow: {
-//     bind(el) {
-//     // Math.random() 输出0到1(包括0，不包含1)的随机数(都是十位的小数)。
-//     // toString(16)将随机数转换为16进制的字符串。
-//     // slice(2,8)从小数点后开始截取，截取6位数
-//     // 简而言之
-//     // Math.random().toString(16).slice(2,8)。
-//     // 可以生成6位数的16进制随机数。
-//     el.style.color = "#" + Math.random().toString(16).slice(2, 8);
-//     },
-// }
-// },
+  //局部自定义指令 directives
+  // directives: {
+  // rainbow: {
+  //     bind(el) {
+  //     // Math.random() 输出0到1(包括0，不包含1)的随机数(都是十位的小数)。
+  //     // toString(16)将随机数转换为16进制的字符串。
+  //     // slice(2,8)从小数点后开始截取，截取6位数
+  //     // 简而言之
+  //     // Math.random().toString(16).slice(2,8)。
+  //     // 可以生成6位数的16进制随机数。
+  //     el.style.color = "#" + Math.random().toString(16).slice(2, 8);
+  //     },
+  // }
+  // },
   methods: {},
 };
 </script>

@@ -94,12 +94,14 @@ export default {
     pushBlog: function () {
       //后期把链接换成自己的数据库就行
       this.$http
-        .post("https://jsonplaceholder.typicode.com/posts", {
-          //在这对对接数据名
-          title: this.blog.title,
-          body: this.blog.content,
-          useId: 1,
-        })
+        .post('https://my-little-project-532c2-default-rtdb.firebaseio.com/posts.json', this.blog)
+        // 旧版jsonplaceholder
+        // .post("https://jsonplaceholder.typicode.com/posts", {
+        //   //在这对对接数据名
+        //   title: this.blog.title,
+        //   body: this.blog.content,
+        //   useId: 1,
+        // })
         .then(function (data) {
           console.log(data);
           this.submmited=true

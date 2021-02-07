@@ -29,4 +29,16 @@ export default {
 .radius-4{
   border-radius: 4px;
 }
+.blog-card {
+  width: 100%;
+  height: auto;
+  padding: 20px;
+  background: #f8f8f8;
+  border: 1px dashed #ddd;
+  margin-top: 20px;
+  box-sizing: border-box;
+}
+.margin-a{
+  margin: 0 auto;
+}
 </style>
