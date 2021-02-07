@@ -31,22 +31,15 @@ export default {
       search: "",
     };
   },
+  // 升级版 从网上拉取数据并自定义数据名称
   created() {
-    // 本地获取数据
-    // vue-cli3 json文件要放在public里
     this.$http
       .get(
         "https://my-little-project-532c2-default-rtdb.firebaseio.com/posts.json"
       )
-      // .get("../../data/posts.json")
-
-      // 从网络获取数据
-      // this.$http.get("https://jsonplaceholder.typicode.com/posts")
       .then((data) => {
-        // 截取前十条数据
         console.log(data.json);
         return data.json();
-        // this.blogItems = data.body.slice(0, 19);
       })
       .then((data) => {
         const blogsArray = [];
@@ -58,16 +51,31 @@ export default {
           data[key].id = key;
 
           // 校验网页是否有id这个参数
-          console.log(data[key]);
+          // console.log(data[key]);
+
           // 把获取的值push到新定义的数组里
           blogsArray.push(data[key]);
         }
-        console.log(blogsArray);
+        // console.log(blogsArray);
 
         // 把获得的blogsArray值赋给blogsItem
         this.blogItems = blogsArray;
       });
   },
+
+  // 基础版
+  // created() {
+  // 本地获取数据
+  // vue-cli3 json文件要放在public里
+  // .get("../../data/posts.json")
+
+  // 从网络获取数据
+  // this.$http.get("https://jsonplaceholder.typicode.com/posts")
+  // .then((data) => {
+  // 截取前十条数据
+  // this.blogItems = data.body.slice(0, 19);
+  // })
+  // },
   computed: {
     filteredBlogs: function () {
       //根据input的search过滤显示的内容，如果search为空，则显示全部内容
